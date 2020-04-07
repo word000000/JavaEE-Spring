@@ -7,7 +7,7 @@ package com.example.spring.mvc.servlet;
  * @Modifyed_By:
  */
 
-import com.example.spring.mvc.jdbc.TeacherHomeworkJdbc;
+import com.example.spring.mvc.dao.TeacherHomeworkJdbc;
 import com.example.spring.mvc.bean.TeacherHomework;
 
 import javax.servlet.ServletException;

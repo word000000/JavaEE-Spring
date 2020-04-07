@@ -1,6 +1,6 @@
 package com.example.spring.mvc.servlet;
 
-import com.example.spring.mvc.jdbc.StudentJdbc;
+import com.example.spring.mvc.dao.StudentJdbc;
 import com.example.spring.mvc.bean.Student;
 
 import javax.servlet.ServletException;

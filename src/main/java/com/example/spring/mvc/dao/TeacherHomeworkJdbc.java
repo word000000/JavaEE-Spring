@@ -1,4 +1,4 @@
-package com.example.spring.mvc.jdbc;
+package com.example.spring.mvc.dao;
 import com.example.spring.mvc.bean.TeacherHomework;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.ApplicationContext;

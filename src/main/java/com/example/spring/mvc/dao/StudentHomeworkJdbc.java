@@ -1,4 +1,4 @@
-package com.example.spring.mvc.jdbc;
+package com.example.spring.mvc.dao;
 
 import com.example.spring.mvc.bean.Student;
 import com.example.spring.mvc.bean.StudentHomework;
@@ -7,7 +7,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -23,11 +23,7 @@ public class StudentHomeworkJdbc {
     private static  ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
     public static String handHomework(StudentHomework nsh) throws ClassNotFoundException {
-//        String url="jdbc:mysql://127.0.0.1:3306/javaee?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8";
-//        String drivername = "com.mysql.cj.jdbc.Driver";
-//        Class.forName(drivername);//可以省略
         String respone = "提交成功";
-
         List<StudentHomework> shlist = StudentHomeworkJdbc.selectAllStudentHomework();
         List<Student> slist = StudentJdbc.selectAllStudent();
         List<TeacherHomework> thlist = TeacherHomeworkJdbc.selectAllTeacherHomework();

@@ -15,7 +15,6 @@ import java.sql.Timestamp;
  * @Modifyed_By:
  */
 
-@Component
 @Configuration
 public class StudentHomework {
     private Long id;

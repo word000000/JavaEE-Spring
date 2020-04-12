@@ -14,22 +14,22 @@
     <h1 >
       作业系统
     </h1>
-      <a href="/searchallhomwork" >
+      <a href="${pageContext.request.contextPath}/searchallhomework" >
         <button >教师---作业列表</button>
       </a>
       <br/>
       <br/>
-      <a href="/searchstudent" >
+      <a href="${pageContext.request.contextPath}/searchstudent" >
         <button>教师---学生列表</button>
       </a>
     <br/>
     <br/>
-      <a href="/searchteacherhomework" >
+      <a href="${pageContext.request.contextPath}/addHomework" >
         <button>教师---发布作业</button>
       </a>
     <br/>
     <br/>
-    <a href="/handinhomework" >
+    <a href="${pageContext.request.contextPath}/submitHomework" >
       <button>学生---提交作业</button>
     </a>
 

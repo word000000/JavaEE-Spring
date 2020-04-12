@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  * @Modifyed_By:
  */
 @Configuration
-@Component
 public class TeacherHomework {
     private long homeworkId;
     private String homeworkTitle;

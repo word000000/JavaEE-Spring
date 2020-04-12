@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  */
 
 @Configuration
-@Component
 public class Student {
     private Long studentId;
     private String studentName;

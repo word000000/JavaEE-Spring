@@ -1,4 +1,4 @@
-<%@ page import="com.example.spring.mvc.jdbc.TeacherHomeworkJdbc" %>
+<%@ page import="com.example.spring.mvc.dao.TeacherHomeworkJdbc" %>
 <%@ page import="com.example.spring.mvc.bean.TeacherHomework" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.spring.mvc.bean.StudentHomework" %><%--

@@ -1,6 +1,8 @@
 package com.example.spring.mvc.bean;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Configuration
+@Scope("prototype")
 public class Student {
     private Long studentId;
     private String studentName;

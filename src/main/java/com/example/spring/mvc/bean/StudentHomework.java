@@ -4,6 +4,7 @@ package com.example.spring.mvc.bean;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -16,6 +17,7 @@ import java.sql.Timestamp;
  */
 
 @Configuration
+@Scope("prototype")
 public class StudentHomework {
     private Long id;
     private Long studentId;

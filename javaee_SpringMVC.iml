@@ -61,5 +61,6 @@
     <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet.jsp:javax.servlet.jsp-api:2.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-nop:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
   </component>
 </module>

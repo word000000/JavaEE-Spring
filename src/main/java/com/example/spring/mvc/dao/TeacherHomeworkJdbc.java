@@ -1,8 +1,13 @@
 package com.example.spring.mvc.dao;
 import com.example.spring.mvc.bean.TeacherHomework;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,11 +20,25 @@ import java.util.List;
  * @Description:
  * @Modifyed_By:
  */
+
+@ComponentScan("com.example.spring.mvc.*")
+@Scope("singleton")
+@Configuration
 public class TeacherHomeworkJdbc {
 
     private static ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    @Autowired
+    TeacherHomework teacherHomework;
     //获取所有教师布置的作业
-    public static List<TeacherHomework> selectAllTeacherHomework() throws ClassNotFoundException {
+
+
+    public  TeacherHomeworkJdbc() { }
+
+    public TeacherHomework getTeacherHomework() {
+        return teacherHomework;
+    }
+
+    public  List<TeacherHomework> selectAllTeacherHomework() throws ClassNotFoundException {
         String sqlString = "select * from teacher_homework ";
         List<TeacherHomework>list=new ArrayList<>();
         try (Connection connection = context.getBean("dataSourceHikari", HikariDataSource.class).getConnection()) {
@@ -29,10 +48,9 @@ public class TeacherHomeworkJdbc {
                 try (ResultSet resultSet = statement.executeQuery(sqlString)) {
                     //获取执行结果
                     while (resultSet.next()) {
-                        TeacherHomework th = (TeacherHomework) context.getBean("teacherHomework");
-                        th.setHomeworkId(resultSet.getLong("homework_id"));
-                        th.setHomeworkTitle(resultSet.getString("homework_title"));
-                        list.add(th);
+                        teacherHomework.setHomeworkId(resultSet.getLong("homework_id"));
+                        teacherHomework.setHomeworkTitle(resultSet.getString("homework_title"));
+                        list.add(teacherHomework);
                     }
                 }
 
@@ -44,7 +62,7 @@ public class TeacherHomeworkJdbc {
     }
 
 
-    public static boolean addHomework(TeacherHomework nth) throws ClassNotFoundException {
+    public  boolean addHomework(TeacherHomework nth) throws ClassNotFoundException {
 
         boolean isSuccess = true;
         try (Connection connection = context.getBean("dataSourceHikari", HikariDataSource.class).getConnection()) {
@@ -68,7 +86,7 @@ public class TeacherHomeworkJdbc {
 
 
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public void main(String[] args) throws ClassNotFoundException {
 
 
         List<TeacherHomework> list1 = selectAllTeacherHomework();

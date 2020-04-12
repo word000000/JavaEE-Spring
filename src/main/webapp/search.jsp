@@ -1,7 +1,9 @@
 <%@ page import="com.example.spring.mvc.dao.TeacherHomeworkJdbc" %>
 <%@ page import="com.example.spring.mvc.bean.TeacherHomework" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.spring.mvc.bean.StudentHomework" %><%--
+<%@ page import="com.example.spring.mvc.bean.StudentHomework" %>
+<%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
+<%@ page import="org.json.JSONObject" %><%--
   Created by IntelliJ IDEA.
   User: guoqi
   Date: 2020/3/7
@@ -23,7 +25,15 @@
         <td align="center">作业标题</td>
     </tr>
     <%
-        List<TeacherHomework> tlist = TeacherHomeworkJdbc.selectAllTeacherHomework();
+
+//        TeacherHomeworkJdbc teacherHomeworkJdbc = new TeacherHomeworkJdbc();
+        JSONObject jsonObject = (JSONObject) request.getAttribute("json");
+        List<TeacherHomework> tlist = (List<TeacherHomework>)jsonObject.get("teacherhomeworklist");
+//        try {
+//            tlist = teacherHomeworkJdbc.selectAllTeacherHomework();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         if(null == tlist||tlist.size()<=0){
             out.println("None data.");
         }else{
@@ -48,7 +58,7 @@
         <td align="center">创建时间</td>
     </tr>
     <%
-        List<StudentHomework> slist = (List<StudentHomework>)request.getAttribute("studenthomeworklist");
+        List<StudentHomework> slist = (List<StudentHomework>)jsonObject.get("studenthomeworklist");
         if(null == slist || slist.size()<=0){
             out.println("None data.");
         }else{

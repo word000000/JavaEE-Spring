@@ -4,9 +4,13 @@ import com.example.spring.mvc.bean.Student;
 import com.example.spring.mvc.bean.StudentHomework;
 import com.example.spring.mvc.bean.TeacherHomework;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,14 +23,25 @@ import java.util.List;
  * @Modifyed_By:
  */
 @ComponentScan("com.example.spring.mvc.*")
+@Scope("singleton")
+@Configuration
 public class StudentHomeworkJdbc {
     private static  ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-    public static String handHomework(StudentHomework nsh) throws ClassNotFoundException {
+    @Autowired
+    StudentHomeworkJdbc studentHomeworkJdbc;
+    @Autowired
+    TeacherHomeworkJdbc teacherHomeworkJdbc;
+    @Autowired
+    StudentJdbc studentJdbc;
+
+    public StudentHomeworkJdbc(){ }
+
+    public String handHomework(StudentHomework nsh) throws ClassNotFoundException {
         String respone = "提交成功";
-        List<StudentHomework> shlist = StudentHomeworkJdbc.selectAllStudentHomework();
-        List<Student> slist = StudentJdbc.selectAllStudent();
-        List<TeacherHomework> thlist = TeacherHomeworkJdbc.selectAllTeacherHomework();
+        List<StudentHomework> shlist = studentHomeworkJdbc.selectAllStudentHomework();
+        List<Student> slist = studentJdbc.selectAllStudent();
+        List<TeacherHomework> thlist = teacherHomeworkJdbc.selectAllTeacherHomework();
         boolean studentExist = false;
         boolean homeworkExist = false;
         //检查学生id
@@ -73,7 +88,7 @@ public class StudentHomeworkJdbc {
     }
 
     //获取所有学生提交的作业
-    public static List<StudentHomework> selectAllStudentHomework() throws ClassNotFoundException {
+    public List<StudentHomework> selectAllStudentHomework() throws ClassNotFoundException {
         String sqlString = "select * from student_homework ";
         List<StudentHomework>list=new ArrayList<>();
 
@@ -84,8 +99,7 @@ public class StudentHomeworkJdbc {
                 try (ResultSet resultSet = statement.executeQuery(sqlString)) {
                     //获取执行结果
                     while (resultSet.next()) {
-                        StudentHomework sh = (StudentHomework) context.getBean("studentHomework");
-//                        StudentHomework sh = new StudentHomework();
+                        StudentHomework sh = new StudentHomework();
                         sh.setId(resultSet.getLong("id"));
                         sh.setStudentId(resultSet.getLong("student_id"));
                         sh.setHomeworkId(resultSet.getLong("homework_id"));
@@ -105,7 +119,7 @@ public class StudentHomeworkJdbc {
     }
 
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public  void main(String[] args) throws ClassNotFoundException {
 
         List<StudentHomework> list= selectAllStudentHomework();
         for(StudentHomework th:list){

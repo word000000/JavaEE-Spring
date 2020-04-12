@@ -6,6 +6,10 @@ import com.example.spring.mvc.bean.TeacherHomework;
 import com.example.spring.mvc.dao.StudentHomeworkJdbc;
 import com.example.spring.mvc.dao.StudentJdbc;
 import com.example.spring.mvc.dao.TeacherHomeworkJdbc;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +30,15 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
+@ComponentScan("com.example.spring.mvc.*")
 public class ApiController {
+
+    @Autowired
+    StudentJdbc studentJdbc;
+    @Autowired
+    StudentHomeworkJdbc studentHomeworkJdbc;
+    @Autowired
+    TeacherHomeworkJdbc teacherHomeworkJdbc;
     /**
         提交作业界面
     */
@@ -51,7 +63,7 @@ public class ApiController {
         resp.setContentType("text/html;charset=UTF-8");
         try {
             try {
-                resp.getWriter().println(StudentHomeworkJdbc.handHomework(nsh)+",3s后跳转");
+                resp.getWriter().println(studentHomeworkJdbc.handHomework(nsh)+",3s后跳转");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -68,7 +80,7 @@ public class ApiController {
     private String addHomework(HttpServletRequest req,HttpServletResponse resp){
         List<TeacherHomework> teacherHomeworkList = null;
         try {
-            teacherHomeworkList = TeacherHomeworkJdbc.selectAllTeacherHomework();
+            teacherHomeworkList = teacherHomeworkJdbc.selectAllTeacherHomework();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -93,7 +105,7 @@ public class ApiController {
         nth.setHomeworkTitle(homeworkTitle);
         List<TeacherHomework> thList = null;
         try {
-            thList = TeacherHomeworkJdbc.selectAllTeacherHomework();
+            thList = teacherHomeworkJdbc.selectAllTeacherHomework();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -115,7 +127,7 @@ public class ApiController {
                 if(nth.getHomeworkTitle().equals("")){
                     resp.getWriter().println("id不为空，请检查后再添加,3s后跳转");
                 }else{
-                    if(TeacherHomeworkJdbc.addHomework(nth)){
+                    if(teacherHomeworkJdbc.addHomework(nth)){
                         resp.getWriter().println("添加成功,3s后跳转");
                     }else {
                         resp.getWriter().println("添加失败，请检查后再添加,3s后跳转");
@@ -140,7 +152,7 @@ public class ApiController {
     private String searchStudent(HttpServletRequest req,HttpServletResponse resp)throws IOException{
         List<Student> list = null;
         try {
-            list = StudentJdbc.selectAllStudent();
+            list = studentJdbc.selectAllStudent();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -164,7 +176,7 @@ public class ApiController {
         newStudent.setStudentName(studentName);
         List<Student> studentList = null;
         try {
-            studentList = StudentJdbc.selectAllStudent();
+            studentList = studentJdbc.selectAllStudent();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -188,7 +200,7 @@ public class ApiController {
 
                     resp.getWriter().println("姓名不为空，请检查后再添加,3s后跳转");
                 }else{
-                    if(StudentJdbc.addStudent(newStudent)){
+                    if(studentJdbc.addStudent(newStudent)){
                         resp.getWriter().println("添加成功,3s后跳转");
                     }else {
                         resp.getWriter().println("添加失败，请检查后再添加,3s后跳转");
@@ -213,13 +225,20 @@ public class ApiController {
         List<StudentHomework> studentHomeworkList = null;
         List<TeacherHomework> teacherHomeworkList = null;
         try {
-            studentHomeworkList = StudentHomeworkJdbc.selectAllStudentHomework();
-//            teacherHomeworkList = TeacherHomeworkJdbc.selectAllTeacherHomework();
+            studentHomeworkList = studentHomeworkJdbc.selectAllStudentHomework();
+            teacherHomeworkList = teacherHomeworkJdbc.selectAllTeacherHomework();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        req.setAttribute("studenthomeworklist",studentHomeworkList);
-//        req.setAttribute("teacherhomeworklist",teacherHomeworkList);
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put("studenthomeworklist",studentHomeworkList);
+            jsonObject.put("teacherhomeworklist",teacherHomeworkList);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        req.setAttribute("json",jsonObject);
         return "/search.jsp";
     }
 }

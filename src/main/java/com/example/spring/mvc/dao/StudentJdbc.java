@@ -3,7 +3,11 @@ package com.example.spring.mvc.dao;
 import com.example.spring.mvc.bean.Student;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,10 +19,14 @@ import java.util.List;
  * @Description:
  * @Modifyed_By:
  */
+
+@Configuration
+@Scope("singleton")
+@ComponentScan("com.example.spring.mvc.*")
 public class StudentJdbc {
     private  static ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-    public static List<Student> selectAllStudent() throws ClassNotFoundException {
+    public  List<Student> selectAllStudent() throws ClassNotFoundException {
         String sqlString = "select * from student ";
         List<Student>list=new ArrayList<>();
         try (Connection connection = context.getBean("dataSourceHikari", HikariDataSource.class).getConnection()) {
@@ -28,7 +36,8 @@ public class StudentJdbc {
                 try (ResultSet resultSet = statement.executeQuery(sqlString)) {
                     //获取执行结果
                     while (resultSet.next()) {
-                        Student student = (Student) context.getBean("student");
+//                        Student student = (Student) context.getBean("student");
+                        Student student = new Student();
                         student.setStudentId(resultSet.getLong("student_id"));
                         student.setStudentName(resultSet.getString("student_name"));
                         list.add(student);
@@ -42,7 +51,7 @@ public class StudentJdbc {
         return list;
     }
 
-    public static boolean addStudent(Student newStudent) throws ClassNotFoundException {
+    public  boolean addStudent(Student newStudent) throws ClassNotFoundException {
 
         List<Student>list=new ArrayList<>();
         boolean isSuccess = true;
@@ -61,7 +70,7 @@ public class StudentJdbc {
         //为了方便后面操作 返回相反的结果
         return !isSuccess;
     }
-    public static void main(String[] args) throws ClassNotFoundException {
+    public  void main(String[] args) throws ClassNotFoundException {
 
         List<Student> list=selectAllStudent();
         for(Student student:list){

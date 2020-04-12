@@ -2,6 +2,7 @@ package com.example.spring.mvc.bean;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @Modifyed_By:
  */
 @Configuration
+@Scope("prototype")
 public class TeacherHomework {
     private long homeworkId;
     private String homeworkTitle;

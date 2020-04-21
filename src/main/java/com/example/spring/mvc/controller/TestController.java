@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,14 +35,10 @@ import java.util.*;
 @Controller
 @RequestMapping("/")
 @ComponentScan("com.example.spring.mvc.*")
-public class ApiController {
+public class TestController {
 
     @Autowired
     StudentDaoImpl studentDao;
-    @Autowired
-    StudentHomeworkDaoImpl studentHomeworkDao;
-    @Autowired
-    TeacherHomeworkDaoImpl teacherHomeworkDao;
     @Autowired
     StudentHomeworkService studentHomeworkService;
     @Autowired
@@ -54,13 +51,9 @@ public class ApiController {
     @RequestMapping(value = "/test")
     private  Map<String, Object>  get(){
         List<StudentHomework> studentHomeworkList = null;
-        List<TeacherHomework> teacherHomeworkList = null;
-        studentHomeworkList = studentHomeworkDao.selectAllStudentHomework();
-        teacherHomeworkList = teacherHomeworkDao.selectAllTeacherHomework();
+        studentHomeworkList = studentHomeworkService.selectAllStudentHomework();
         Map<String,Object> map = new HashMap<>(10);
-        Map<String,Object> map1 = new HashMap<>(10);
-        Map<String,Object> map2 = new HashMap<>(10);
-        Map<String,Object> map3 = new HashMap<>(10);
+
         map.put("sh",studentHomeworkList);
         return map;
     }

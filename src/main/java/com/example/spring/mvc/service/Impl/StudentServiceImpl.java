@@ -5,6 +5,7 @@ import com.example.spring.mvc.pojo.Student;
 import com.example.spring.mvc.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @Description:
  * @Modifyed_By:
  */
+@EnableAspectJAutoProxy
 @Component
 @ComponentScan("com.example.spring.mvc.*")
 public class StudentServiceImpl implements StudentService {

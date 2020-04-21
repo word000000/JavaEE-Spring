@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.List;
  * @Modifyed_By:
  */
 
-@Configuration
+@Component
 @Scope("singleton")
 @ComponentScan("com.example.spring.mvc.*")
 public class StudentDaoImpl implements StudentDao {

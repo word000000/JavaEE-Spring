@@ -5,6 +5,7 @@ import com.example.spring.mvc.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * @Modifyed_By:
  */
 
-@Component
+@Controller
 @ComponentScan("com.example.spring.mvc.*")
 @RequestMapping("/")
 public class StudentController {

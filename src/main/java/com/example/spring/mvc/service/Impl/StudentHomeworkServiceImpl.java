@@ -9,6 +9,8 @@ import com.example.spring.mvc.pojo.TeacherHomework;
 import com.example.spring.mvc.service.StudentHomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
  * @Modifyed_By:
  */
 
+@EnableAspectJAutoProxy
 @Component
 @ComponentScan("com.example.spring.mvc.*")
 

@@ -140,7 +140,23 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.61</version>
         </dependency>
+
+<!--        &lt;!&ndash;aop&ndash;&gt;-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-aop</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.1</version>
+        </dependency>
+
     </dependencies>
+
+
+
 
     <build>
         <plugins>

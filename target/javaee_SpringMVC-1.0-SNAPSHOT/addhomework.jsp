@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.spring.mvc.bean.TeacherHomework" %><%--
+<%@ page import="com.example.spring.mvc.pojo.TeacherHomework" %><%--
   Created by IntelliJ IDEA.
   User: guoqi
   Date: 2020/3/8
@@ -40,7 +40,7 @@
 <h1 align="center">
     发布作业
 </h1>
-<form align="center" action="/addhomework" method="post">
+<form align="center" action="/createHomework" method="post">
     作业编号:<input type="number" name="homeworkid">
     <br><br><br>
     作业名称:<input type="text" name="homeworktitle">

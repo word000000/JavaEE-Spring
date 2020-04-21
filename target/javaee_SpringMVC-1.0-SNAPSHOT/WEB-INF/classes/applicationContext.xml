@@ -28,7 +28,9 @@
         <property name="minimumIdle" value="10" />
     </bean>
 
-    <bean id="student" class="com.example.spring.mvc.bean.Student" scope="prototype"></bean>
-    <bean id="studentHomework" class="com.example.spring.mvc.bean.StudentHomework" scope="prototype"></bean>
-    <bean id="teacherHomework" class="com.example.spring.mvc.bean.TeacherHomework" scope="prototype"></bean>
+    <bean id="student" class="com.example.spring.mvc.pojo.Student" scope="prototype"></bean>
+    <bean id="studentHomework" class="com.example.spring.mvc.pojo.StudentHomework" scope="prototype"></bean>
+    <bean id="teacherHomework" class="com.example.spring.mvc.pojo.TeacherHomework" scope="prototype"></bean>
+
+
 </beans>

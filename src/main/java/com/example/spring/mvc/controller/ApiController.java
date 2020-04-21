@@ -1,11 +1,13 @@
 package com.example.spring.mvc.controller;
 
-import com.example.spring.mvc.bean.Student;
-import com.example.spring.mvc.bean.StudentHomework;
-import com.example.spring.mvc.bean.TeacherHomework;
-import com.example.spring.mvc.dao.StudentHomeworkJdbc;
-import com.example.spring.mvc.dao.StudentJdbc;
-import com.example.spring.mvc.dao.TeacherHomeworkJdbc;
+import com.example.spring.mvc.pojo.Student;
+import com.example.spring.mvc.pojo.StudentHomework;
+import com.example.spring.mvc.pojo.TeacherHomework;
+import com.example.spring.mvc.dao.Impl.StudentHomeworkDaoImpl;
+import com.example.spring.mvc.dao.Impl.StudentDaoImpl;
+import com.example.spring.mvc.dao.Impl.TeacherHomeworkDaoImpl;
+import com.example.spring.mvc.service.StudentHomeworkService;
+import com.example.spring.mvc.service.StudentService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author:GQM
@@ -34,211 +37,31 @@ import java.util.List;
 public class ApiController {
 
     @Autowired
-    StudentJdbc studentJdbc;
+    StudentDaoImpl studentDao;
     @Autowired
-    StudentHomeworkJdbc studentHomeworkJdbc;
+    StudentHomeworkDaoImpl studentHomeworkDao;
     @Autowired
-    TeacherHomeworkJdbc teacherHomeworkJdbc;
-    /**
-        提交作业界面
-    */
-    @RequestMapping("submitHomework")
-    private String submitHomework(){
-        return  "/submitHomework.jsp";
-    }
-    /**
-    学生提交作业
-    */
-    @RequestMapping("submit")
-    private void submit(@RequestParam(value = "studentid")Long studentId,
-                        @RequestParam(value = "homeworkid")Long homeworkId,
-                        @RequestParam(value = "homeworkcontent")String homeworkContent,
-                        HttpServletResponse resp){
-        StudentHomework nsh = new StudentHomework();
-        nsh.setStudentId(studentId);
-        nsh.setHomeworkId(homeworkId);
-        nsh.setHomeworkContent(homeworkContent);
-        Timestamp dateNow = new Timestamp(System.currentTimeMillis());
-        nsh.setCreatTime(dateNow);
-        resp.setContentType("text/html;charset=UTF-8");
-        try {
-            try {
-                resp.getWriter().println(studentHomeworkJdbc.handHomework(nsh)+",3s后跳转");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        resp.setHeader("refresh","3;URL=index.jsp");
-    }
-
-    /**
-     *跳转界面 发布作业
-     */
-    @RequestMapping("addHomework")
-    private String addHomework(HttpServletRequest req,HttpServletResponse resp){
-        List<TeacherHomework> teacherHomeworkList = null;
-        try {
-            teacherHomeworkList = teacherHomeworkJdbc.selectAllTeacherHomework();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        req.setAttribute("teacherhomeworklist",teacherHomeworkList);
-        return "/addhomework.jsp";
-    }
+    TeacherHomeworkDaoImpl teacherHomeworkDao;
+    @Autowired
+    StudentHomeworkService studentHomeworkService;
+    @Autowired
+    StudentService studentService;
 
 
-    /**
-     * 教师发布作业
-     * @param homeworkId
-     * @param homeworkTitle
-     * @param resp
-     * @throws IOException
-     */
-    @RequestMapping("createHomework")
-    private void createHomework(@RequestParam(value = "homeworkid")Long homeworkId,
-                                @RequestParam(value = "homeworktitle")String homeworkTitle,
-                                HttpServletResponse resp) throws IOException{
-        TeacherHomework nth = new TeacherHomework();
-        nth.setHomeworkId(homeworkId);
-        nth.setHomeworkTitle(homeworkTitle);
-        List<TeacherHomework> thList = null;
-        try {
-            thList = teacherHomeworkJdbc.selectAllTeacherHomework();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        boolean isExist = false;
-        for(TeacherHomework th:thList){
-            //使用equals方法
-            if(nth.getHomeworkId()==th.getHomeworkId()){
-                isExist = true;
-                break;
-            }
-        }
-        resp.setContentType("text/html;charset=UTF-8");
-        if(isExist){
-            //中文编码
-            resp.getWriter().println("该id已被使用,3s后跳转");
-            //延时跳转
-        }else {
-            try {
-                if(nth.getHomeworkTitle().equals("")){
-                    resp.getWriter().println("id不为空，请检查后再添加,3s后跳转");
-                }else{
-                    if(teacherHomeworkJdbc.addHomework(nth)){
-                        resp.getWriter().println("添加成功,3s后跳转");
-                    }else {
-                        resp.getWriter().println("添加失败，请检查后再添加,3s后跳转");
-                    }
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            //延时跳转
-        }
-        resp.setHeader("refresh","3;URL=index.jsp");
-    }
 
-    /**
-     * 跳转界面 学生名单操作
-     * @param req
-     * @param resp
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping("searchstudent")
-    private String searchStudent(HttpServletRequest req,HttpServletResponse resp)throws IOException{
-        List<Student> list = null;
-        try {
-            list = studentJdbc.selectAllStudent();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        req.setAttribute("studentlist",list);
-        return "/student.jsp";
-    }
 
-    /**
-     * 添加学生
-     * @param studentId
-     * @param studentName
-     * @param resp
-     * @throws IOException
-     */
-    @RequestMapping("addstudent")
-    private void addStudent(@RequestParam(value = "studentid")Long studentId,
-                            @RequestParam(value = "studentname")String studentName,
-                            HttpServletResponse resp) throws IOException{
-        Student newStudent = new Student();
-        newStudent.setStudentId(studentId);
-        newStudent.setStudentName(studentName);
-        List<Student> studentList = null;
-        try {
-            studentList = studentJdbc.selectAllStudent();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        boolean isExist = false;
-        for(Student student:studentList){
-            //使用equals方法
-            if( newStudent.getStudentId().equals(student.getStudentId())){
-                isExist = true;
-                break;
-            }
-        }
-        resp.setContentType("text/html;charset=UTF-8");
-        if(isExist){
-            //中文编码
-            resp.getWriter().println("该学号已被注册,3s后跳转");
-            //延时跳转
-        }else {
-
-            try {
-                if(newStudent.getStudentName().equals("")){
-
-                    resp.getWriter().println("姓名不为空，请检查后再添加,3s后跳转");
-                }else{
-                    if(studentJdbc.addStudent(newStudent)){
-                        resp.getWriter().println("添加成功,3s后跳转");
-                    }else {
-                        resp.getWriter().println("添加失败，请检查后再添加,3s后跳转");
-                    }
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            //延时跳转
-        }
-        resp.setHeader("refresh","3;URL=index.jsp");
-    }
-
-    /**
-     * 跳转界面 查看作业记录
-     * @param req
-     * @param resp
-     * @return
-     */
-    @RequestMapping("searchallhomework")
-    private String searchAllHomework(HttpServletRequest req,HttpServletResponse resp){
+    @ResponseBody
+    @RequestMapping(value = "/test")
+    private  Map<String, Object>  get(){
         List<StudentHomework> studentHomeworkList = null;
         List<TeacherHomework> teacherHomeworkList = null;
-        try {
-            studentHomeworkList = studentHomeworkJdbc.selectAllStudentHomework();
-            teacherHomeworkList = teacherHomeworkJdbc.selectAllTeacherHomework();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        JSONObject jsonObject = new JSONObject();
-        try {
-
-            jsonObject.put("studenthomeworklist",studentHomeworkList);
-            jsonObject.put("teacherhomeworklist",teacherHomeworkList);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        req.setAttribute("json",jsonObject);
-        return "/search.jsp";
+        studentHomeworkList = studentHomeworkDao.selectAllStudentHomework();
+        teacherHomeworkList = teacherHomeworkDao.selectAllTeacherHomework();
+        Map<String,Object> map = new HashMap<>(10);
+        Map<String,Object> map1 = new HashMap<>(10);
+        Map<String,Object> map2 = new HashMap<>(10);
+        Map<String,Object> map3 = new HashMap<>(10);
+        map.put("sh",studentHomeworkList);
+        return map;
     }
 }

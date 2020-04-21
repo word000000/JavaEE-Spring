@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.spring.mvc.bean.Student" %><%--
+<%@ page import="com.example.spring.mvc.pojo.Student" %><%--
   Created by IntelliJ IDEA.
   User: guoqi
   Date: 2020/3/7

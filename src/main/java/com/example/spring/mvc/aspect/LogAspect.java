@@ -1,12 +1,12 @@
 package com.example.spring.mvc.aspect;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Timestamp;
 
 /**
@@ -19,22 +19,31 @@ import java.sql.Timestamp;
 @Component
 public  class LogAspect {
 
-    @Around("execution(* com.example.spring.mvc.service.*.*(..))")
-    public  Object processTx(ProceedingJoinPoint jp) throws java.lang.Throwable {
-        Object object;
+    @Around(value = "execution(* com.example.spring.mvc.service.*.*(..))")
+    public  Object logAspect(ProceedingJoinPoint jp){
+        Object object = null;
         String className = jp.getTarget().getClass().getSimpleName();
         String methodName = jp.getSignature().getName();
         Timestamp timestampBefore = new Timestamp(System.currentTimeMillis());
+        String argStr = "";
         System.out.println("["+timestampBefore+"作业管理系统]" +className+"."+methodName+"()  开始事务.....");
-        object = jp.proceed();
+        try{
+            object = jp.proceed();
+        }catch (Throwable ex) {
+            Timestamp timestampException = new Timestamp(System.currentTimeMillis());
+            System.out.println("["+timestampException+"作业管理系统] 捕获到异常"+ex);
+        }
         Timestamp timestampAfter = new Timestamp(System.currentTimeMillis());
-        System.out.println("["+timestampBefore+"作业管理系统]" +className+"."+methodName+"()  结束事务.....");
+        System.out.println("["+timestampAfter+"作业管理系统]" +className+"."+methodName+"()  结束事务.....");
         return object;
     }
 
-    @AfterThrowing(throwing = "throwable",value = "execution(* com.example.spring.mvc.service.*.*(..))")
-    public void afterThrowing(Throwable throwable) {
-        System.out.println("异常："+throwable);
+    @AfterReturning( value = "execution(* com.example.spring.mvc.service.*.*(..))",returning="returnValue")
+    public void logReturnValue(JoinPoint jp, Object returnValue){
+        String className = jp.getTarget().getClass().getSimpleName();
+        String methodName = jp.getSignature().getName();
+        Timestamp timestampAfter = new Timestamp(System.currentTimeMillis());
+        System.out.println("["+timestampAfter+"作业管理系统]" +className+"."+methodName+"()  返回参数....."+returnValue.toString());
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.spring.mvc.dao;
 
 import com.example.spring.mvc.pojo.TeacherHomework;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,13 +17,15 @@ public interface TeacherHomeworkDao {
      * 教师发布作业
      * @param nth
      * @return
+     * @throws SQLException
      */
-    boolean addHomework(TeacherHomework nth);
+    boolean addHomework(TeacherHomework nth) throws SQLException;
 
     /**
      * 查询所有教师作业的列表
      * @return
+     * @throws SQLException
      */
-    List<TeacherHomework> selectAllTeacherHomework();
+    List<TeacherHomework> selectAllTeacherHomework() throws SQLException;
 
 }

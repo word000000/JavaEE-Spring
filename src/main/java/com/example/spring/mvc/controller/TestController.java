@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -48,13 +49,31 @@ public class TestController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "test")
     private  Map<String, Object>  get(){
         List<StudentHomework> studentHomeworkList = null;
-        studentHomeworkList = studentHomeworkService.selectAllStudentHomework();
+        try {
+            studentHomeworkList = studentHomeworkService.selectAllStudentHomework();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Map<String,Object> map = new HashMap<>(10);
 
         map.put("sh",studentHomeworkList);
         return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/test1")
+    private  String testException(){
+        Student student = new Student();
+        student.setStudentId((long) 1);
+        student.setStudentName("aaa");
+        try {
+            studentService.addStudent(student);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "aaaa";
     }
 }

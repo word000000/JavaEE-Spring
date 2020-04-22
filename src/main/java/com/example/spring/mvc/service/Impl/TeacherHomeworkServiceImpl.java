@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +26,8 @@ public class TeacherHomeworkServiceImpl implements TeacherHomeworkService {
     @Autowired
     TeacherHomeworkDao teacherHomeworkDao;
    @Override
-   public String createHomework(TeacherHomework nth) {
+   public String createHomework(TeacherHomework nth) throws Exception{
+       String response = "";
        List<TeacherHomework> thList = null;
        thList = teacherHomeworkDao.selectAllTeacherHomework();
        for(TeacherHomework th:thList){
@@ -37,17 +40,25 @@ public class TeacherHomeworkServiceImpl implements TeacherHomeworkService {
            return "作业名不为空，请检查后再添加,3s后跳转";
        }else{
            if(teacherHomeworkDao.addHomework(nth)){
-               return "添加成功,3s后跳转";
+               response ="添加成功,3s后跳转";
            }else {
-               return "添加失败，请检查后再添加,3s后跳转";
+               response = "添加失败，请检查后再添加,3s后跳转";
            }
        }
        //延时跳转
-
+        return response;
    }
 
    @Override
-    public List<TeacherHomework> selectAllTeacherHomework(){
-       return teacherHomeworkDao.selectAllTeacherHomework();
+    public List<TeacherHomework> selectAllTeacherHomework() throws Exception{
+
+       List<TeacherHomework> list= new ArrayList<TeacherHomework>();
+       try {
+           list = teacherHomeworkDao.selectAllTeacherHomework();
+       } catch (SQLException throwables) {
+           throwables.printStackTrace();
+       }
+        return list;
+
    }
 }

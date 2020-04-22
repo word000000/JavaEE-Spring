@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -41,9 +42,13 @@ public class TeacherHomeworkController {
      *跳转界面 发布作业
      */
     @RequestMapping("addHomework")
-    private String addHomework(HttpServletRequest req, HttpServletResponse resp){
+    private String addHomework(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
         List<TeacherHomework> teacherHomeworkList = null;
-        teacherHomeworkList = teacherHomeworkService.selectAllTeacherHomework();
+        try {
+            teacherHomeworkList = teacherHomeworkService.selectAllTeacherHomework();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         req.setAttribute("teacherhomeworklist",teacherHomeworkList);
         return "/addhomework.jsp";
     }
@@ -61,12 +66,16 @@ public class TeacherHomeworkController {
     @RequestMapping("createHomework")
     private void createHomework(@RequestParam(value = "homeworkid")Long homeworkId,
                                 @RequestParam(value = "homeworktitle")String homeworkTitle,
-                                HttpServletResponse resp) throws IOException{
+                                HttpServletResponse resp) {
         TeacherHomework nth = new TeacherHomework();
         nth.setHomeworkId(homeworkId);
         nth.setHomeworkTitle(homeworkTitle);
         resp.setContentType("text/html;charset=UTF-8");
-        resp.getWriter().println(teacherHomeworkService.createHomework(nth));
+        try {
+            resp.getWriter().println(teacherHomeworkService.createHomework(nth));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         resp.setHeader("refresh","3;URL=index.jsp");
     }
 
@@ -88,8 +97,12 @@ public class TeacherHomeworkController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        studentHomeworkList = studentHomeworkService.selectAllStudentHomework();
-        teacherHomeworkList = teacherHomeworkService.selectAllTeacherHomework();
+        try {
+            studentHomeworkList = studentHomeworkService.selectAllStudentHomework();
+            teacherHomeworkList = teacherHomeworkService.selectAllTeacherHomework();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("studenthomeworklist",studentHomeworkList);

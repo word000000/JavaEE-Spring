@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -49,11 +50,18 @@ public class StudentHomeworkController {
         Timestamp dateNow = new Timestamp(System.currentTimeMillis());
         nsh.setCreatTime(dateNow);
         resp.setContentType("text/html;charset=UTF-8");
+        String response = null;
         try {
-            resp.getWriter().println(studentHomeworkService.addStudentHomework(nsh)+",3s后跳转");
+            response = studentHomeworkService.addStudentHomework(nsh);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            resp.getWriter().println(response+",3s后跳转");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         resp.setHeader("refresh","3;URL=index.jsp");
     }
 }

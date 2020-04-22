@@ -13,6 +13,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -37,12 +38,18 @@ public  class StudentHomeworkServiceImpl implements StudentHomeworkService {
     TeacherHomeworkDao teacherHomeworkDao;
 
     @Override
-    public String addStudentHomework(StudentHomework nsh){
+    public String addStudentHomework(StudentHomework nsh) throws Exception{
         String respone = "提交成功";
-        List<Student> slist = studentDao.selectAllStudent();
-        List<StudentHomework> shlist = studentHomeworkDao.selectAllStudentHomework();
-        List<TeacherHomework> thlist = teacherHomeworkDao.selectAllTeacherHomework();
-
+        List<Student> slist = null;
+        List<StudentHomework> shlist = null;
+        List<TeacherHomework> thlist = null;
+        try {
+            slist = studentDao.selectAllStudent();
+            thlist = teacherHomeworkDao.selectAllTeacherHomework();
+            shlist = studentHomeworkDao.selectAllStudentHomework();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         boolean studentExist = false;
         boolean homeworkExist = false;
 
@@ -73,13 +80,21 @@ public  class StudentHomeworkServiceImpl implements StudentHomeworkService {
         }
         int id = shlist.size()+1;
         nsh.setId((long)id);
-        respone = studentHomeworkDao.addStudentHomework(nsh);
+        try {
+            respone = studentHomeworkDao.addStudentHomework(nsh);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return respone;
     }
 
     @Override
-    public List<StudentHomework> selectAllStudentHomework(){
-        return studentHomeworkDao.selectAllStudentHomework();
+    public List<StudentHomework> selectAllStudentHomework() throws Exception{
+        List<StudentHomework> list =null;
+
+        list= studentHomeworkDao.selectAllStudentHomework();
+
+        return list;
     }
 }
 

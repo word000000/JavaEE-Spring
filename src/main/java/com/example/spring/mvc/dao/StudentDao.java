@@ -2,6 +2,7 @@ package com.example.spring.mvc.dao;
 
 import com.example.spring.mvc.pojo.Student;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -15,13 +16,15 @@ public interface StudentDao {
     /**
      * 查询学生列表
      * @return
+     * @throws SQLException
      */
-    List<Student> selectAllStudent();
+    List<Student> selectAllStudent() throws SQLException;
 
     /**
      * 添加学生
      * @param newStudent
      * @return
+     * @throws SQLException
      */
-    boolean addStudent(Student newStudent);
+    boolean addStudent(Student newStudent) throws SQLException;
 }

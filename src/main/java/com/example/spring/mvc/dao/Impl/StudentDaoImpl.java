@@ -55,11 +55,11 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public  boolean addStudent(Student newStudent){
+    public  boolean addStudent(Student newStudent) throws SQLException{
 
         List<Student>list=new ArrayList<>();
         boolean isSuccess = true;
-        try (Connection connection = hikariDataSource.getConnection()) {
+        Connection connection = hikariDataSource.getConnection();
             //通过连接获取statement
             //Preparestatement （增、删、改、查）
             String sqlString = "insert into student(student_id,student_name) values (?,?)";
@@ -68,9 +68,7 @@ public class StudentDaoImpl implements StudentDao {
             ps.setString(2,newStudent.getStudentName());
             //成功返回false 失败返回true
             isSuccess = ps.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         //为了方便后面操作 返回相反的结果
         return !isSuccess;
     }

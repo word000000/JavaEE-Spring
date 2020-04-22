@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -37,9 +38,16 @@ public class StudentController {
      * @throws IOException
      */
     @RequestMapping("searchstudent")
-    private String searchStudent(HttpServletRequest req, HttpServletResponse resp)throws IOException{
+    private String searchStudent(HttpServletRequest req, HttpServletResponse resp){
 
-        List<Student> list = studentService.selectAllStudent();
+        List<Student> list = null;
+
+        try {
+            list = studentService.selectAllStudent();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         req.setAttribute("studentlist",list);
         return "/student.jsp";
     }
@@ -54,14 +62,22 @@ public class StudentController {
     @RequestMapping("addstudent")
     private void addStudent(@RequestParam(value = "studentid")Long studentId,
                             @RequestParam(value = "studentname")String studentName,
-                            HttpServletResponse resp) throws IOException{
+                            HttpServletResponse resp) {
         String response = "添加成功";
         Student newStudent = new Student();
         newStudent.setStudentId(studentId);
         newStudent.setStudentName(studentName);
         resp.setContentType("text/html;charset=UTF-8");
-        response = studentService.addStudent(newStudent);
-        resp.getWriter().println(response);
+        try {
+            response = studentService.addStudent(newStudent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            resp.getWriter().println(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         resp.setHeader("refresh","1;URL=index.jsp");
     }
 }

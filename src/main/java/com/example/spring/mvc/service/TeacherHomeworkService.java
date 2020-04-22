@@ -2,6 +2,7 @@ package com.example.spring.mvc.service;
 
 import com.example.spring.mvc.pojo.TeacherHomework;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,12 +17,12 @@ public interface TeacherHomeworkService {
      * @param teacherHomework
      * @return
      */
-    String createHomework(TeacherHomework teacherHomework);
+    String createHomework(TeacherHomework teacherHomework) throws Exception;
 
     /**
      * 获取所有布置过的作业
      * @return
      */
-    List<TeacherHomework> selectAllTeacherHomework();
+    List<TeacherHomework> selectAllTeacherHomework() throws Exception;
 
 }

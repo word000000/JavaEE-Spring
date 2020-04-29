@@ -27,12 +27,19 @@ public  class LogAspect {
         Timestamp timestampBefore = new Timestamp(System.currentTimeMillis());
         String argStr = "";
         System.out.println("["+timestampBefore+"作业管理系统]" +className+"."+methodName+"()  开始事务.....");
-        try{
+
+//        try{
+
+        try {
             object = jp.proceed();
-        }catch (Throwable ex) {
-            Timestamp timestampException = new Timestamp(System.currentTimeMillis());
-            System.out.println("["+timestampException+"作业管理系统] 捕获到异常"+ex);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
+
+//        }catch (Throwable ex) {
+//            Timestamp timestampException = new Timestamp(System.currentTimeMillis());
+//            System.out.println("["+timestampException+"作业管理系统] 捕获到异常"+ex);
+//        }
         Timestamp timestampAfter = new Timestamp(System.currentTimeMillis());
         System.out.println("["+timestampAfter+"作业管理系统]" +className+"."+methodName+"()  结束事务.....");
         return object;

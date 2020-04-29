@@ -3,6 +3,8 @@ package com.example.spring.mvc.pojo;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import javax.persistence.*;
+
 /**
  * @Author:GQM
  * @Date:created in 21:32 2020/3/7
@@ -10,14 +12,22 @@ import org.springframework.context.annotation.Scope;
  * @Modifyed_By:
  */
 
+@Entity
+@Table(name = "student")
 @Configuration
-@Scope("prototype")
 public class Student {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="student_id")
     private Long studentId;
+
+    @Column(name = "student_name")
     private String studentName;
 
-    public Student(){}
 
+
+    public Student(){ }
 
     public Long getStudentId() {
         return studentId;

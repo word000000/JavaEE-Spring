@@ -19,13 +19,13 @@ public interface StudentHomeworkService {
      * @param nsh
      * @return
      */
-    String addStudentHomework(StudentHomework nsh) throws Exception;
+    String addStudentHomework(StudentHomework nsh);
 
 
     /**
      * 查询所有学生提交的作业记录
      * @return
      */
-    List<StudentHomework> selectAllStudentHomework() throws Exception;
+    List<StudentHomework> selectAllStudentHomework();
 
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -63,6 +62,7 @@ public class StudentController {
     private void addStudent(@RequestParam(value = "studentid")Long studentId,
                             @RequestParam(value = "studentname")String studentName,
                             HttpServletResponse resp) {
+
         String response = "添加成功";
         Student newStudent = new Student();
         newStudent.setStudentId(studentId);
@@ -80,4 +80,5 @@ public class StudentController {
         }
         resp.setHeader("refresh","1;URL=index.jsp");
     }
+
 }

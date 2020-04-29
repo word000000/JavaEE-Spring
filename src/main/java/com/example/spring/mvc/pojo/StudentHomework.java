@@ -5,6 +5,7 @@ package com.example.spring.mvc.pojo;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -13,30 +14,34 @@ import java.sql.Timestamp;
  * @Description:
  * @Modifyed_By:
  */
-
+@Entity
+@Table(name = "student_homework")
 @Configuration
-@Scope("prototype")
 public class StudentHomework {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "student_id")
     private Long studentId;
+
+    @Column(name = "homework_id")
     private Long homeworkId;
+
+    @Column(name = "homework_title")
     private String homeworkTitle;
+
+    @Column(name = "homework_content")
     private String homeworkContent;
-    private Timestamp creatTime;
+
+    @Column(name = "create_time")
+    private Timestamp createTime;
+
+    @Column(name = "update_time")
     private Timestamp updateTime;
 
-
     public StudentHomework(){}
-
-    public StudentHomework(Long id, Long studentId, Long homeworkId, String homeworkTitle, String homeworkContent, Timestamp creatTime, Timestamp updateTime) {
-        this.id = id;
-        this.studentId = studentId;
-        this.homeworkId = homeworkId;
-        this.homeworkTitle = homeworkTitle;
-        this.homeworkContent = homeworkContent;
-        this.creatTime = creatTime;
-        this.updateTime = updateTime;
-    }
 
     public Long getId() {
         return id;
@@ -79,11 +84,11 @@ public class StudentHomework {
     }
 
     public Timestamp getCreatTime() {
-        return creatTime;
+        return createTime;
     }
 
     public void setCreatTime(Timestamp creatTime) {
-        this.creatTime = creatTime;
+        this.createTime = creatTime;
     }
 
     public Timestamp getUpdateTime() {

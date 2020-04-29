@@ -17,12 +17,12 @@ public interface StudentService {
      * 查找所有学生名单
      * @return
      */
-    List<Student> selectAllStudent() throws Exception;
+    List<Student> selectAllStudent();
 
     /**
      * 新增学生
      * @param newStudent
      * @return
      */
-    String addStudent(Student newStudent) throws Exception;
+    String addStudent(Student newStudent);
 }

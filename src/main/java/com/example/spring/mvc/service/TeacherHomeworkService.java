@@ -17,12 +17,12 @@ public interface TeacherHomeworkService {
      * @param teacherHomework
      * @return
      */
-    String createHomework(TeacherHomework teacherHomework) throws Exception;
+    String createHomework(TeacherHomework teacherHomework);
 
     /**
      * 获取所有布置过的作业
      * @return
      */
-    List<TeacherHomework> selectAllTeacherHomework() throws Exception;
+    List<TeacherHomework> selectAllTeacherHomework();
 
 }

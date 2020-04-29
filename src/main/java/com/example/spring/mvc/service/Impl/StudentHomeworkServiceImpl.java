@@ -38,18 +38,14 @@ public  class StudentHomeworkServiceImpl implements StudentHomeworkService {
     TeacherHomeworkDao teacherHomeworkDao;
 
     @Override
-    public String addStudentHomework(StudentHomework nsh) throws Exception{
+    public String addStudentHomework(StudentHomework nsh){
         String respone = "提交成功";
         List<Student> slist = null;
         List<StudentHomework> shlist = null;
         List<TeacherHomework> thlist = null;
-        try {
-            slist = studentDao.selectAllStudent();
-            thlist = teacherHomeworkDao.selectAllTeacherHomework();
-            shlist = studentHomeworkDao.selectAllStudentHomework();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        slist = studentDao.findAllBy();
+        thlist = teacherHomeworkDao.findAllBy();
+        shlist = studentHomeworkDao.findAllBy();
         boolean studentExist = false;
         boolean homeworkExist = false;
 
@@ -80,19 +76,18 @@ public  class StudentHomeworkServiceImpl implements StudentHomeworkService {
         }
         int id = shlist.size()+1;
         nsh.setId((long)id);
-        try {
-            respone = studentHomeworkDao.addStudentHomework(nsh);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        if(studentHomeworkDao.addStudentHomework(nsh.getId(),nsh.getStudentId(),nsh.getHomeworkId(),nsh.getHomeworkTitle(),nsh.getHomeworkContent(),nsh.getCreatTime())>0){
+            return respone;
+        }else {
+            return "提交失败";
         }
-        return respone;
     }
 
     @Override
-    public List<StudentHomework> selectAllStudentHomework() throws Exception{
+    public List<StudentHomework> selectAllStudentHomework() {
         List<StudentHomework> list =null;
 
-        list= studentHomeworkDao.selectAllStudentHomework();
+        list= studentHomeworkDao.findAllBy();
 
         return list;
     }

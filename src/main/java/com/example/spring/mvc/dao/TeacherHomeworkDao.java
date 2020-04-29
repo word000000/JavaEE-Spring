@@ -1,7 +1,13 @@
 package com.example.spring.mvc.dao;
 
 import com.example.spring.mvc.pojo.TeacherHomework;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,21 +17,27 @@ import java.util.List;
  * @Description:
  * @Modifyed_By:
  */
-public interface TeacherHomeworkDao {
+
+@Repository
+public interface TeacherHomeworkDao extends JpaRepository<TeacherHomework,Long> {
 
     /**
      * 教师发布作业
-     * @param nth
+     * @param
      * @return
      * @throws SQLException
      */
-    boolean addHomework(TeacherHomework nth) throws SQLException;
+    @Modifying
+    @Transactional
+    @Query(value = "insert into teacher_homework(homeworkId,homeworkTitle) values (:id,:title)",nativeQuery = true)
+    public int addTeacherHomework(@Param("id") Long id, @Param("title") String homeworkTitle);
 
     /**
      * 查询所有教师作业的列表
      * @return
      * @throws SQLException
      */
-    List<TeacherHomework> selectAllTeacherHomework() throws SQLException;
+    @Query(value = "select * from teacher_homework",nativeQuery = true)
+    public List<TeacherHomework> findAllBy();
 
 }

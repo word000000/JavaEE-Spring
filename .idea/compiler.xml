@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Spring_MVC_jpa" />
         <module name="javaee_SpringMVC" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="javaee_SpringMVC" target="11" />
+      <module name="Spring_MVC_jpa" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

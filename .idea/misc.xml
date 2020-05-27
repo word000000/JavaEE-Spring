@@ -9,6 +9,7 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/Spring_MVC_jpa/pom.xml" />
+        <option value="$PROJECT_DIR$/Spring_Boot_mybatis/pom.xml" />
       </list>
     </option>
   </component>

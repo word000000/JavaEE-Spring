@@ -1,10 +1,9 @@
 package com.example.spring.mvc.controller;
 
-import com.example.spring.mvc.pojo.Student;
+import com.example.spring.mvc.bean.Student;
 import com.example.spring.mvc.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

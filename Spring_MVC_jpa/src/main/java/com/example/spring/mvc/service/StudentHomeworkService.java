@@ -1,6 +1,6 @@
 package com.example.spring.mvc.service;
 
-import com.example.spring.mvc.pojo.StudentHomework;
+import com.example.spring.mvc.bean.StudentHomework;
 
 import java.util.List;
 

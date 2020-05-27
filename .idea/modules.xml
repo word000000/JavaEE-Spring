@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Spring_Boot_mybatis/Spring_Boot_mybatis.iml" filepath="$PROJECT_DIR$/Spring_Boot_mybatis/Spring_Boot_mybatis.iml" />
       <module fileurl="file://$PROJECT_DIR$/Spring_MVC_jpa/Spring_MVC_jpa.iml" filepath="$PROJECT_DIR$/Spring_MVC_jpa/Spring_MVC_jpa.iml" />
       <module fileurl="file://$PROJECT_DIR$/javaee_SpringMVC.iml" filepath="$PROJECT_DIR$/javaee_SpringMVC.iml" />
     </modules>

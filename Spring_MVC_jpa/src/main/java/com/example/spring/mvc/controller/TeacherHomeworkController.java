@@ -1,14 +1,13 @@
 package com.example.spring.mvc.controller;
 
-import com.example.spring.mvc.pojo.StudentHomework;
-import com.example.spring.mvc.pojo.TeacherHomework;
+import com.example.spring.mvc.bean.StudentHomework;
+import com.example.spring.mvc.bean.TeacherHomework;
 import com.example.spring.mvc.service.StudentHomeworkService;
 import com.example.spring.mvc.service.TeacherHomeworkService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -1,6 +1,6 @@
 package com.example.spring.mvc.dao;
 
-import com.example.spring.mvc.pojo.StudentHomework;
+import com.example.spring.mvc.bean.StudentHomework;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

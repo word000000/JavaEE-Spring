@@ -1,7 +1,7 @@
 package com.example.spring.mvc.service.Impl;
 
 import com.example.spring.mvc.dao.TeacherHomeworkDao;
-import com.example.spring.mvc.pojo.TeacherHomework;
+import com.example.spring.mvc.bean.TeacherHomework;
 import com.example.spring.mvc.service.TeacherHomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

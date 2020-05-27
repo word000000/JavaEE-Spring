@@ -36,7 +36,7 @@
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 
         <!--配置要扫描的包，实体所在包-->
-        <property name="packagesToScan" value="com.example.spring.mvc.pojo"/>
+        <property name="packagesToScan" value="com.example.spring.mvc.bean"/>
         <!--配置数据源 数据库连接池-->
         <property name="dataSource" ref="dataSourceHikari"/>
         <!--配置jpa的实现方-->
@@ -66,7 +66,7 @@
             </props>
         </property>
     </bean>
-    <context:component-scan base-package="com.example.spring.mvc.pojo"></context:component-scan>
+    <context:component-scan base-package="com.example.spring.mvc.bean"></context:component-scan>
     <!--配置事务管理器-->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />

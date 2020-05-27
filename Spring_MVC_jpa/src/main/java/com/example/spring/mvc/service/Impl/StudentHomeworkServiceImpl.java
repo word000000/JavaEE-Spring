@@ -2,15 +2,14 @@ package com.example.spring.mvc.service.Impl;
 
 import com.example.spring.mvc.dao.StudentHomeworkDao;
 import com.example.spring.mvc.dao.TeacherHomeworkDao;
-import com.example.spring.mvc.pojo.Student;
-import com.example.spring.mvc.pojo.StudentHomework;
-import com.example.spring.mvc.pojo.TeacherHomework;
+import com.example.spring.mvc.bean.Student;
+import com.example.spring.mvc.bean.StudentHomework;
+import com.example.spring.mvc.bean.TeacherHomework;
 import com.example.spring.mvc.service.StudentHomeworkService;
 import com.example.spring.mvc.dao.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

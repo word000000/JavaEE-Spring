@@ -1,9 +1,8 @@
-package com.example.spring.mvc.pojo;
+package com.example.spring.mvc.bean;
 
 
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

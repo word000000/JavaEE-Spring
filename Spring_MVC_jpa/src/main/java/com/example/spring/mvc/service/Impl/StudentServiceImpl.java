@@ -1,6 +1,6 @@
 package com.example.spring.mvc.service.Impl;
 
-import com.example.spring.mvc.pojo.Student;
+import com.example.spring.mvc.bean.Student;
 import com.example.spring.mvc.service.StudentService;
 import com.example.spring.mvc.dao.StudentDao;
 

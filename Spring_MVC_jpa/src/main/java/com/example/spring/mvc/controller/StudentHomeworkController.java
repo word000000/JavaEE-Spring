@@ -1,6 +1,6 @@
 package com.example.spring.mvc.controller;
 
-import com.example.spring.mvc.pojo.StudentHomework;
+import com.example.spring.mvc.bean.StudentHomework;
 import com.example.spring.mvc.service.StudentHomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

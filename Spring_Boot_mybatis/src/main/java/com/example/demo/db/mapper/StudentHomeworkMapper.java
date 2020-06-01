@@ -29,8 +29,7 @@ public interface StudentHomeworkMapper {
     })
     List<StudentHomework> selectAllStudentHomework();
 
-    @Insert("INSERTE INTO student_homework(id,student_id,homework_id,homework_title,homework_content,create_time) " +
-            "VALUES(#{id},#{studentId},#{homeworkId},#{homeworkTitle},#{homeworkContent},#{createTime})")
+    @Insert("Insert INTO student_homework(id,student_id,homework_id,homework_title,homework_content,create_time)VALUES(#{id},#{studentId},#{homeworkId},#{homeworkTitle},#{homeworkContent},#{createTime})")
     int addnStudentHomework(StudentHomework studentHomework);
 
 }

@@ -78,8 +78,8 @@ public class StudentHomework {
         return createTime;
     }
 
-    public void setCreatTime(Timestamp creatTime) {
-        this.createTime = creatTime;
+    public void setCreatTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 
     public Timestamp getUpdateTime() {

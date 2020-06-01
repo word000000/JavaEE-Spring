@@ -3,22 +3,28 @@ package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.core.response.DataResponse;
 import com.example.demo.db.model.StudentHomework;
 import com.example.demo.db.model.TeacherHomework;
 import com.example.demo.db.service.StudentHomeworkService;
 import com.example.demo.db.service.TeacherHomeworkService;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author:GQM
@@ -27,7 +33,7 @@ import java.util.List;
  * @Modifyed_By:
  */
 @RequestMapping("/")
-@Controller
+@RestController
 @ComponentScan("com.example.demo.*")
 public class TeacherHomeworkController {
 
@@ -63,19 +69,18 @@ public class TeacherHomeworkController {
      * @throws IOException
      */
     @RequestMapping("createHomework")
-    private void createHomework(@RequestParam(value = "homeworkid")Long homeworkId,
-                                @RequestParam(value = "homeworktitle")String homeworkTitle,
-                                HttpServletResponse resp) {
-        TeacherHomework nth = new TeacherHomework();
-        nth.setHomeworkId(homeworkId);
-        nth.setHomeworkTitle(homeworkTitle);
-        resp.setContentType("text/html;charset=UTF-8");
+    private DataResponse<String> createHomework(@RequestBody TeacherHomework homework) {
+        DataResponse<String> response = new DataResponse<>();
+//        TeacherHomework nth = new TeacherHomework();
+//        nth.setHomeworkId(Long.parseLong(homeworkId));
+//        nth.setHomeworkTitle(homeworkTitle);
+        System.out.println();
         try {
-            resp.getWriter().println(teacherHomeworkService.createHomework(nth));
+            response.setData(teacherHomeworkService.createHomework(homework));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.setHeader("refresh","3;URL=index.jsp");
+        return response;
     }
 
 
@@ -87,29 +92,19 @@ public class TeacherHomeworkController {
      * @return
      */
     @RequestMapping("searchallhomework")
-    private String searchAllHomework(HttpServletRequest req,HttpServletResponse resp){
+    private Map<String,Object> searchAllHomework(){
+        Map<String,Object> map = new HashMap<>(2);
         List<StudentHomework> studentHomeworkList = null;
         List<TeacherHomework> teacherHomeworkList = null;
-        resp.setContentType("application/json;charset=utf-8");
-        try {
-            PrintWriter out = resp.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         try {
             studentHomeworkList = studentHomeworkService.selectAllStudentHomework();
             teacherHomeworkList = teacherHomeworkService.selectAllTeacherHomework();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("studenthomeworklist",studentHomeworkList);
-            jsonObject.put("teacherhomeworklist",teacherHomeworkList);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        req.setAttribute("json",jsonObject);
-        return "/search.jsp";
+        map.put("studenthomework",studentHomeworkList);
+        map.put("teacherhomework",teacherHomeworkList);
+        return map;
     }
 }

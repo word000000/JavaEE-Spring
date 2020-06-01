@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import java.rmi.StubNotFoundException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**

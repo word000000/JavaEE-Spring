@@ -1,8 +1,5 @@
 package com.example.demo.core.response;
 
-import jdk.jfr.DataAmount;
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
 
 /**
  * @Author:GQM
@@ -10,12 +7,33 @@ import jdk.nashorn.internal.objects.annotations.Setter;
  * @Description:
  * @Modifyed_By:
  */
-
-@Data
 public class DataResponse<T> {
 
     private int code;
     private String msg;
     private T data;
 
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

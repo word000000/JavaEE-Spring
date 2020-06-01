@@ -8,9 +8,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,10 +48,12 @@ public class StudentController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 //        req.setAttribute("studentlist",list);
 //        return "/student.jsp";
-        return list;
+        dataResponse.setCode(0);
+        dataResponse.setMsg("查询成功");
+        dataResponse.setData(list);
+        return dataResponse;
     }
 
     /**
@@ -64,26 +64,29 @@ public class StudentController {
      * @throws IOException
      */
     @RequestMapping("addstudent")
-    private void addStudent(@RequestParam(value = "studentid")Long studentId,
-                            @RequestParam(value = "studentname")String studentName,
-                            HttpServletResponse resp) {
-
+    private DataResponse<String> addStudent(@RequestBody Student student) {
+        DataResponse<String> dataResponse = new DataResponse<>();
         String response = "添加成功";
-        Student newStudent = new Student();
-        newStudent.setStudentId(studentId);
-        newStudent.setStudentName(studentName);
-        resp.setContentType("text/html;charset=UTF-8");
+//        long id = Long.parseLong(studentId);
+//        Student newStudent = new Student();
+//        newStudent.setStudentId(id);
+//        newStudent.setStudentName(studentName);
+//        resp.setContentType("text/html;charset=UTF-8");
         try {
-            response = studentService.addStudent(newStudent);
+            response = studentService.addStudent(student);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            resp.getWriter().println(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        resp.setHeader("refresh","1;URL=index.jsp");
+        dataResponse.setCode(1);
+        dataResponse.setMsg("成功");
+        dataResponse.setData(response);
+        return dataResponse;
+//        try {
+//            resp.getWriter().println(response);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        resp.setHeader("refresh","1;URL=index.jsp");
     }
 
 }

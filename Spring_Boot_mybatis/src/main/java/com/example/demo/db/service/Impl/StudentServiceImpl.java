@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String addStudent(Student newStudent) {
+    public String addStudent(Student newStudent){
         List<Student> studentList = null;
         String response ="";
 
@@ -42,7 +43,7 @@ public class StudentServiceImpl implements StudentService {
         for(Student student:studentList){
             //使用equals方法
             if( newStudent.getStudentId().equals(student.getStudentId())){
-                return "该学号已被注册,3s后跳转";
+                return "该学号已被注册";
             }
         }
         int s = studentMapper.addStudent(newStudent);

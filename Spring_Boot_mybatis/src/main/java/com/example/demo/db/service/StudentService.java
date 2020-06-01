@@ -4,6 +4,7 @@ package com.example.demo.db.service;
 
 import com.example.demo.db.model.Student;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -25,5 +26,5 @@ public interface StudentService {
      * @param newStudent
      * @return
      */
-    String addStudent(Student newStudent);
+    String addStudent(Student newStudent) throws SQLException;
 }
